@@ -8,7 +8,6 @@ blueprint:
           selector:
             entity:
               integration: ozw
-              domain: ozw
       two_tap_up:
         name: 2x tap up
         description: Action to run on double tap up
