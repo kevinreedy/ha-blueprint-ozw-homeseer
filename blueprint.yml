@@ -1,14 +1,14 @@
 blueprint:
-  name: HomeSeer multi-tap actions
+  name: HomeSeer multi-tap actions (OpenZWave)
   domain: automation
   input:
-      zwave_entity:
-          name: zwave entity
-          description: Choose the zwave entity
+      ozw_entity:
+          name: ozw entity
+          description: Choose the ozw entity
           selector:
             entity:
-              integration: zwave
-              domain: zwave
+              integration: ozw
+              domain: ozw
       two_tap_up:
         name: 2x tap up
         description: Action to run on double tap up
@@ -62,13 +62,13 @@ mode: restart
 max_exceeded: silent
 
 variables:
-  zwave_entity: !input zwave_entity
+  ozw_entity: !input ozw_entity
 
 trigger:
   - platform: event
-    event_type: zwave.scene_activated
+    event_type: ozw.scene_activated
     event_data:
-      entity_id: !input zwave_entity
+      entity_id: !input ozw_entity
 
 action:
   - variables:
