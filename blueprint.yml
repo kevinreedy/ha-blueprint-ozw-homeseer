@@ -1,0 +1,125 @@
+blueprint:
+  name: HomeSeer multi-tap actions
+  domain: automation
+  input:
+      zwave_entity:
+          name: zwave entity
+          description: Choose the zwave entity
+          selector:
+            entity:
+              integration: zwave
+              domain: zwave
+      two_tap_up:
+        name: 2x tap up
+        description: Action to run on double tap up
+        default: []
+        selector:
+          action:
+      two_tap_down:
+        name: 2x tap down
+        description: Action to run on double tap down
+        default: []
+        selector:
+          action:
+      three_tap_up:
+        name: 3x tap up
+        description: Action to run on triple tap up
+        default: []
+        selector:
+          action:
+      three_tap_down:
+        name: 3x tap down
+        description: Action to run on triple tap down
+        default: []
+        selector:
+          action:
+      four_tap_up:
+        name: 4x tap up
+        description: Action to run on four taps up
+        default: []
+        selector:
+          action:
+      four_tap_down:
+        name: 4x tap down
+        description: Action to run on four taps down
+        default: []
+        selector:
+          action:
+      five_tap_up:
+        name: 5x tap up
+        description: Action to run on five taps up
+        default: []
+        selector:
+          action:
+      five_tap_down:
+        name: 5x tap down
+        description: Action to run on five taps down
+        default: []
+        selector:
+          action:
+
+mode: restart
+max_exceeded: silent
+
+variables:
+  zwave_entity: !input zwave_entity
+
+trigger:
+  - platform: event
+    event_type: zwave.scene_activated
+    event_data:
+      entity_id: !input zwave_entity
+
+action:
+  - variables:
+      scene_id: '{{ trigger.event.data.scene_id }}'
+      scene_data: '{{ trigger.event.data.scene_data }}'
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 1 }}'
+      - condition: template
+        value_template: '{{ scene_data == 7860 }}'
+      sequence: !input two_tap_up
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 2 }}'
+      - condition: template
+        value_template: '{{ scene_data == 7860 }}'
+      sequence: !input two_tap_down
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 1 }}'
+      - condition: template
+        value_template: '{{ scene_data == 7920 }}'
+      sequence: !input three_tap_up
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 2 }}'
+      - condition: template
+        value_template: '{{ scene_data == 7920 }}'
+      sequence: !input three_tap_down
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 1 }}'
+      - condition: template
+        value_template: '{{ scene_data == 7980 }}'
+      sequence: !input four_tap_up
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 2 }}'
+      - condition: template
+        value_template: '{{ scene_data == 7980 }}'
+      sequence: !input four_tap_down
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 1 }}'
+      - condition: template
+        value_template: '{{ scene_data == 8040 }}'
+      sequence: !input five_tap_up
+    - conditions:
+      - condition: template
+        value_template: '{{ scene_id == 2 }}'
+      - condition: template
+        value_template: '{{ scene_data == 8040 }}'
+      sequence: !input five_tap_down
